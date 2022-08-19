@@ -10,7 +10,11 @@ pipeline {
 	password(name: 'dockerpass', description: 'Enter docker login password ')	    
     }
     stages {
-        
+	    stage('checkout'){
+		    steps{
+		    checkout scm
+		    }
+	    }
 	stage('Remove dockers'){
 	    steps {
 		sh "if [ `sudo docker ps -a -q|wc -l` -gt 0 ]; then sudo docker rm -f \$(sudo docker ps -a -q);fi"
