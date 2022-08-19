@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('SCM checkout'){
             steps {
-		git "https://github.com/debasis-gif/devopsIQ.git"
+		git "https://github.com/Ronak-Sharma/cicd.git"
             }
 	}
 	stage('Remove dockers'){
@@ -22,30 +22,37 @@ pipeline {
 	}
 	stage('Build'){
 	    steps {
-		    sh "sudo docker build /home/ubuntu/jenkins/workspace/${JOB_NAME} -t debasis-gif/devopsdemo"
+		    sh "cd ${WORKSPACE}"
+		    sh "sudo docker build -t devopsdemo ."
 	   }
 	}
 	stage('Docker Push'){
 		steps {
-		    sh "sudo docker login --username debasis-gif --password ${dockerpass}"
-                    sh "sudo docker push debasis-gif/devopsdemo:latest"
+		    sh '''
+		    echo "sudo docker login --username debasis-gif --password ${dockerpass}"
+                    echo "sudo docker push debasis-gif/devopsdemo:latest"
+		    '''
 	        }
 	}
 	stage('Configure servers with Docker and deploy website') {
             	steps {
-			sh 'ansible-playbook docker.yaml -e "hostname=${servername}"'
+			sh '''
+			echo "ansible-playbook docker.yaml -e hostname=${servername}"
+			'''
             	}
         }
 	stage('Install Chrome browser') {
             	steps {
-                	sh 'ansible-playbook chrome.yaml -e "hostname=localhost"'
+                	sh '''
+			echo "ansible-playbook chrome.yaml -e hostname=localhost"
+			'''
             	}
         }
 	stage ('Testing'){
 		steps {
 			sh "sudo apt install python3-pip -y"
 			sh "pip3 install selenium"
-			sh "python3 selenium_test.py ${params.serverIP}"
+			//sh "python3 selenium_test.py ${params.serverIP}"
 		}
 	}
     }
