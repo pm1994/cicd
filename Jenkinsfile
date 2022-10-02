@@ -23,14 +23,13 @@ pipeline {
 	stage('Build'){
 	    steps {
 		    sh "cd ${WORKSPACE}"
-		    sh "sudo docker build -t devopsdemo ."
+		    sh "sudo docker build ${WORKSPACE} -t devopsdemo ."
 	   }
 	}
-	stage('Docker Push'){
+	stage('Enable service'){
 		steps {
 		    sh '''
-		    echo "sudo docker login --username debasis-gif --password ${dockerpass}"
-                    echo "sudo docker push debasis-gif/devopsdemo:latest"
+		    sudo docker run -it -p 82:80 -d devopsdemo
 		    '''
 	        }
 	}
