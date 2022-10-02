@@ -23,7 +23,7 @@ pipeline {
 	stage('Build'){
 	    steps {
 		    sh "cd ${WORKSPACE}"
-		    sh "sudo docker build ${WORKSPACE} -t devopsdemo ."
+		    sh "sudo docker build -t devopsdemo ."
 	   }
 	}
 	stage('Enable service'){
