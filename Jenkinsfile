@@ -67,8 +67,10 @@ pipeline {
 	}
 	    stage ('mvn deploy'){
 		steps {
-			sh "cd ${WORKSPACE}/javacode/hello_world"
-			sh "mvn deploy"
+			sh '''
+                        cd ${WORKSPACE}/javacode/hello_world/
+                        mvn deploy
+                        sh '''
 		}
 	}
     }
