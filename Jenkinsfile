@@ -58,7 +58,7 @@ pipeline {
 	stage ('mvn build'){
 		steps {
 			sh "cd ${WORKSPACE}/javacode/hello_world"
-			sh "mvn build"
+			sh "mvn install"
 		}
 	}
 	    stage ('mvn deploy'){
