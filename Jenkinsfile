@@ -55,5 +55,17 @@ pipeline {
 			//sh "python3 selenium_test.py ${params.serverIP}"
 		}
 	}
+	stage ('mvn build'){
+		steps {
+			sh "cd ${WORKSPACE}/javacode/hello_world"
+			sh "mvn build"
+		}
+	}
+	    stage ('mvn deploy'){
+		steps {
+			sh "cd ${WORKSPACE}/javacode/hello_world"
+			sh "mvn deploy"
+		}
+	}
     }
 }
