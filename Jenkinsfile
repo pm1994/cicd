@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'slave02'
+            label 'slave'
         }
     }
     parameters {
@@ -17,19 +17,21 @@ pipeline {
 	    }
 	stage('Remove dockers'){
 	    steps {
-		sh "if [ `sudo docker ps -a -q|wc -l` -gt 0 ]; then sudo docker rm -f \$(sudo docker ps -a -q);fi"
+		//sh "if [ `sudo docker ps -a -q|wc -l` -gt 0 ]; then sudo docker rm -f \$(sudo docker ps -a -q);fi"
+		sh "echo Remove dockers"
 		}
 	}
 	stage('Build'){
 	    steps {
 		    sh "cd ${WORKSPACE}"
-		    sh "sudo docker build -t devopsdemo ."
+		    //sh "sudo docker build -t devopsdemo ."
+		    sh "echo Build"
 	   }
 	}
 	stage('Enable service'){
 		steps {
 		    sh '''
-		    sudo docker run -it -p 82:80 -d devopsdemo
+		    echo "sudo docker run -it -p 82:80 -d devopsdemo"
 		    '''
 	        }
 	}
@@ -61,7 +63,7 @@ pipeline {
                         cd ${WORKSPACE}/javacode/hello_world/
                         ls -l
                         pwd
-                        mvn install
+                        echo "mvn install"
                         sh '''
 		}
 	}
@@ -69,7 +71,7 @@ pipeline {
 		steps {
 			sh '''
                         cd ${WORKSPACE}/javacode/hello_world/
-                        mvn deploy
+                        echo "mvn deploy"
                         sh '''
 		}
 	}
