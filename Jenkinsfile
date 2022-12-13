@@ -71,7 +71,7 @@ pipeline {
 		steps {
 			sh '''
                         cd ${WORKSPACE}/javacode/hello_world/
-                        echo "mvn deploy"
+                        mvn deploy
                         sh '''
 		}
 	}
